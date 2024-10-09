@@ -34,6 +34,8 @@ def get_dataset(args,device,visualization=False):
     note=args.note
     if args.dataset =='AWS':
         loc = datasets.aws.get_data(missing_rate,seq_len,pred_len,stride_len,note)
+    if args.dataset =='SP500':
+        loc = datasets.sp500.get_data(missing_rate,seq_len,pred_len,stride_len,note)
     here = pathlib.Path(__file__).resolve().parent
     base_base_loc = here / 'datasets/processed_data'
     
