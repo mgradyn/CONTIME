@@ -43,7 +43,7 @@ class ContGruFunc_Delay(torch.nn.Module):
         h_ = torch.mul(z,h_past) + torch.mul((1-z),g) # save h at t 
          
         file_path_h_past = os.path.join(self.file, 'h_past')
-        full_file_path_h_past = os.path.join(file_path, f'h_past_{self.rnd}.npy')
+        full_file_path_h_past = os.path.join(file_path_h_past, f'h_past_{self.rnd}.npy')
 
         os.makedirs(file_path_h_past, exist_ok=True)
 
