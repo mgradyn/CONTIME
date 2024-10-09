@@ -369,7 +369,7 @@ def main(model_name=args.model,num_epochs=args.epoch):
         
         ckpt_file = train(args,model,times,train_dataloader, val_dataloader,test_dataloader,optimizer,loss_fn,NLL_fn,device)
     else:
-        MODEL_PATH = '/trained_model/'+str(args.model)+'/'+str(args.dataset)+'/'+str(args.seq_len)+"_"+str(args.pred_len)+"_"+str(args.stride_len)+"_"+str(args.note)+"_"+str(args.lr)+"_"+str(args.alpha)+"_"+str(args.beta)+"/"
+        MODEL_PATH = '/CONTIME/trained_model/'+str(args.model)+'/'+str(args.dataset)+'/'+str(args.seq_len)+"_"+str(args.pred_len)+"_"+str(args.stride_len)+"_"+str(args.note)+"_"+str(args.lr)+"_"+str(args.alpha)+"_"+str(args.beta)+"/"
         ckpt_file = MODEL_PATH+"contime.pth" 
         print("============> Evaluation <============")
         mae, mse, rmse, mape, mspe, rse, corr,tdi,dtw = load_model(args,ckpt_file,visualize_version=args.visualize_version)
