@@ -1,5 +1,6 @@
 
 import torch 
+import os
 import numpy as np 
 global dhdt_list 
 global t_list 
@@ -41,7 +42,12 @@ class ContGruFunc_Delay(torch.nn.Module):
         g = g0.tanh()
         h_ = torch.mul(z,h_past) + torch.mul((1-z),g) # save h at t 
          
-        np.save(self.file+'/h_past/h_past_'+str(self.rnd)+'.npy',h_.cpu().detach().numpy())
+        file_path_h_past = os.path.join(self.file, 'h_past')
+        full_file_path_h_past = os.path.join(file_path, f'h_past_{self.rnd}.npy')
+
+        os.makedirs(file_path_h_past, exist_ok=True)
+
+        np.save(full_file_path_h_past, h_.cpu().detach().numpy())
 
         hg = h_past - g
         
@@ -60,7 +66,12 @@ class ContGruFunc_Delay(torch.nn.Module):
         dhgdt = dhpast_dt - dgdt
         
         dhdt = torch.mul(dzdt,hg) + torch.mul(z,dhgdt) + dgdt 
-        np.save(self.file+'/dhpastdt/dhpastdt_'+str(self.rnd)+'.npy',dhdt.cpu().detach().numpy())
+        file_path_dhpastdt = os.path.join(self.file, 'dhpastdt')
+        full_file_path_dhpastdt = os.path.join(file_path_dhpastdt, f'dhpastdt_{self.rnd}.npy')
+
+        os.makedirs(file_path_dhpastdt, exist_ok=True)
+
+        np.save(full_file_path_dhpastdt, dhdt.cpu().detach().numpy())
         
         if self.time%1 == 0 and self.time not in self.t_list:
             
@@ -74,7 +85,12 @@ class ContGruFunc_Delay(torch.nn.Module):
                 self.dhdt_list = dhdt.unsqueeze(0)
             if self.time_max - self.time <= 1: 
                 
-                np.save(self.file+'/dhpastdt/dhdt_'+str(self.rnd)+'.npy', self.dhdt_list.cpu().detach().numpy())
+                file_path_dhdt = os.path.join(self.file, 'dhpastdt')
+                full_file_path_dhdt = os.path.join(file_path_dhdt, f'dhdt_{self.rnd}.npy')
+
+                os.makedirs(file_path_dhdt, exist_ok=True)
+
+                np.save(full_file_path_dhdt, self.dhdt_list.cpu().detach().numpy())
                 # self.dhdt_list = torch.Tensor()
                 # self.t_list = []
         else:
